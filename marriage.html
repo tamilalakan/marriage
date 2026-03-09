@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="ta">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kate & Drew | Thirumanam 2023</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Noto+Serif+Tamil:wght@300;400;600;700&family=Source+Code+Pro:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+  /* ─── TOKENS ─── */
+  :root{
+    --crimson:#5C0A1E; --crimson-mid:#7B1530; --crimson-drk:#3A0712;
+    --saffron:#C8560A;
+    --gold:#C9922A; --gold-lt:#E8BE5A; --gold-pale:#F5DFA0; --gold-dim:#9A6E1E;
+    --cream:#FDF3DC; --cream-warm:#F7E4B8; --ivory:#FFFBF0;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Cormorant Garamond',serif;background:var(--cream-warm);overflow-x:hidden}
+
+  /* ─── PETALS ─── */
+  #petals-canvas{position:fixed;inset:0;pointer-events:none;z-index:998}
+
+  /* ─── KOLAM BORDERS ─── */
+  .kb{position:fixed;left:0;right:0;height:26px;z-index:900;pointer-events:none}
+  .kb.t{top:0}.kb.b{bottom:0}
+  .kb svg{display:block;width:100%;height:26px}
+
+  /* ─── STICKY NAV ─── */
+  .sticky-nav{
+    position:fixed;top:26px;left:0;right:0;z-index:800;
+    background:rgba(92,10,30,.96);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(200,146,42,.3);
+    display:flex;justify-content:space-between;align-items:center;
+    padding:0 40px;height:54px;
+  }
+  .nav-brand{
+    font-family:'Playfair Display',serif;font-size:16px;font-weight:700;
+    color:var(--gold-lt);letter-spacing:3px;
+  }
+  .nav-brand span{font-family:'Noto Serif Tamil',serif;font-size:12px;color:var(--gold-dim);margin-left:8px}
+  .nav-links{display:flex;gap:32px;align-items:center}
+  .nav-links a{
+    font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:600;
+    letter-spacing:2px;text-transform:uppercase;color:rgba(248,227,178,.7);
+    text-decoration:none;position:relative;transition:color .2s;cursor:pointer;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;bottom:-4px;left:50%;right:50%;
+    height:1.5px;background:var(--gold-lt);transition:left .25s,right .25s;
+  }
+  .nav-links a.active{color:var(--gold-lt)}
+  .nav-links a.active::after,.nav-links a:hover::after{left:0;right:0}
+  .nav-links a:hover{color:var(--gold-lt)}
+
+  /* hamburger */
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--gold-lt);border-radius:2px;transition:all .3s}
+  .mobile-menu{
+    display:none;position:fixed;top:80px;left:0;right:0;z-index:799;
+    background:rgba(58,7,18,.98);border-bottom:1px solid rgba(200,146,42,.3);
+    flex-direction:column;padding:16px 0;
+  }
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{
+    font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;
+    letter-spacing:2px;text-transform:uppercase;color:rgba(248,227,178,.8);
+    text-decoration:none;padding:14px 40px;cursor:pointer;
+    border-bottom:1px solid rgba(200,146,42,.1);transition:background .2s;
+  }
+  .mobile-menu a:hover{background:rgba(200,146,42,.1);color:var(--gold-lt)}
+
+  /* ─── SECTION BASE ─── */
+  section{width:100%;position:relative;scroll-margin-top:80px}
+
+  /* ═══════════════════════════════════════════
+    SECTION 1 — HOME (stacked: crimson + cream)
+  ═══════════════════════════════════════════ */
+  #home{}
+
+  /* ── HERO TOP (crimson) ── */
+  .hero-top{
+    width:100%;
+    background:var(--crimson);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:100px 20px 80px;
+    min-height:100vh;
+  }
+  .silk-weave{
+    position:absolute;inset:0;pointer-events:none;
+    background-image:
+      repeating-linear-gradient(90deg,transparent 0,rgba(200,146,42,.035) 1px,transparent 2px,transparent 9px),
+      repeating-linear-gradient(0deg,transparent 0,rgba(200,146,42,.035) 1px,transparent 2px,transparent 9px),
+      repeating-linear-gradient(45deg,rgba(180,80,30,.02) 0,rgba(180,80,30,.02) 1px,transparent 1px,transparent 14px);
+  }
+  .left-glow{
+    position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse at 60% 45%,rgba(200,146,42,.08) 0%,transparent 65%);
+  }
+
+  /* brand badge */
+  .brand-badge{
+    display:flex;align-items:center;gap:12px;
+    margin-bottom:24px;position:relative;z-index:10;
+  }
+  .brand-tamil{font-family:'Noto Serif Tamil',serif;font-size:18px;color:var(--gold-lt)}
+  .brand-center{display:flex;flex-direction:column;align-items:center;gap:3px}
+  .brand-name{
+    font-family:'Playfair Display',serif;font-size:22px;font-weight:700;
+    color:var(--gold-lt);letter-spacing:4px;text-transform:uppercase;
+  }
+  .brand-rule{width:100px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+  .brand-sub{font-family:'Noto Serif Tamil',serif;font-size:10px;letter-spacing:3px;color:var(--gold-dim)}
+
+  /* date + arch + social row */
+  .hero-content-row{
+    display:flex;align-items:center;justify-content:center;
+    gap:10px;width:100%;max-width:680px;
+    position:relative;z-index:10;
+  }
+
+  /* date column */
+  .date-col{
+    display:flex;flex-direction:column;align-items:center;flex-shrink:0;
+  }
+  .date-diam{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);margin-bottom:10px}
+  .dn{
+    font-family:'Playfair Display',serif;font-size:56px;font-weight:900;
+    color:var(--cream);line-height:.9;letter-spacing:-2px;
+    text-shadow:0 3px 14px rgba(0,0,0,.55);
+  }
+  .dr{width:42px;height:1.5px;background:linear-gradient(to right,transparent,var(--gold-lt),transparent);margin:7px 0}
+  .date-lbl{
+    font-family:'Noto Serif Tamil',serif;font-size:8px;
+    letter-spacing:2px;color:var(--gold-dim);margin-top:4px;
+  }
+  .date-tail{width:1.5px;height:38px;background:linear-gradient(to bottom,var(--gold),transparent);margin-top:6px}
+
+  /* arch */
+  .arch-wrap{position:relative;width:320px;flex-shrink:0}
+  .arch-photo-slot{
+    position:absolute;top:46px;left:50%;transform:translateX(-50%);
+    width:210px;height:288px;overflow:hidden;
+    clip-path:ellipse(46% 49% at 50% 50%);z-index:2;
+  }
+  .ph{
+    width:100%;height:100%;
+    background:linear-gradient(170deg,#c4956a 0%,#8b5e40 30%,#7a3530 60%,#3d1c1c 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:rgba(255,255,255,.22);font-size:10px;letter-spacing:1px;gap:8px;
+  }
+  .bride-circle{
+    position:absolute;bottom:-28px;right:-44px;
+    width:124px;height:124px;border-radius:50%;overflow:hidden;z-index:25;
+    box-shadow:0 0 0 3px var(--gold),0 0 0 6px var(--crimson-mid),0 8px 26px rgba(0,0,0,.5);
+    animation:ringPulse 3s ease-in-out infinite;
+  }
+  @keyframes ringPulse{
+    0%,100%{box-shadow:0 0 0 3px var(--gold),0 0 0 6px var(--crimson-mid),0 8px 26px rgba(0,0,0,.5)}
+    50%{box-shadow:0 0 0 3px var(--gold-lt),0 0 0 8px var(--crimson-mid),0 10px 32px rgba(200,146,42,.3)}
+  }
+
+  /* garland */
+  .garland-row{
+    position:relative;z-index:10;margin-bottom:12px;
+  }
+
+  /* lamps */
+  .lamps-row{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    width:100%;max-width:400px;
+    position:relative;z-index:10;margin-top:36px;
+  }
+  .lamp-svg{
+    filter:drop-shadow(0 0 10px rgba(255,155,30,.75));
+    animation:glowPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes glowPulse{
+    0%,100%{filter:drop-shadow(0 0 10px rgba(255,155,30,.75))}
+    50%{filter:drop-shadow(0 0 20px rgba(255,200,60,1))}
+  }
+
+  /* leaves */
+  .leaf-abs{position:absolute;pointer-events:none;z-index:5}
+
+  /* social bar */
+  .social-bar{
+    display:flex;gap:18px;z-index:10;
+    position:relative;margin-top:32px;
+  }
+  .si{
+    width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+    border:1px solid rgba(200,150,42,.3);border-radius:50%;
+    transition:all .25s;cursor:pointer;
+  }
+  .si:hover{background:rgba(200,150,42,.15);border-color:var(--gold-lt);transform:translateY(-2px)}
+  .si svg{width:14px;height:14px;fill:var(--gold-lt)}
+
+  /* wave divider bottom of crimson section */
+  .wave-divider{
+    position:absolute;bottom:-1px;left:0;right:0;z-index:20;
+    line-height:0;
+  }
+  .wave-divider svg{display:block;width:100%}
+
+  /* ── HERO BOTTOM (cream) ── */
+  .hero-bottom{
+    width:100%;
+    background:var(--ivory);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:60px 24px 40px;
+  }
+  .right-tex{
+    position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 25% 20%,rgba(200,150,42,.06) 0%,transparent 55%),
+      radial-gradient(ellipse at 78% 78%,rgba(200,150,42,.05) 0%,transparent 50%),
+      repeating-linear-gradient(90deg,transparent 0,rgba(200,150,42,.018) 1px,transparent 2px,transparent 55px),
+      repeating-linear-gradient(0deg,transparent 0,rgba(200,150,42,.018) 1px,transparent 2px,transparent 55px);
+  }
+  .kolam-wm{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    opacity:.042;pointer-events:none;z-index:1;
+  }
+  .peacock{position:absolute;pointer-events:none;font-size:110px;opacity:.07;z-index:0}
+  .peacock.br{bottom:20px;right:20px;transform:rotate(-20deg)}
+  .peacock.tl{top:20px;left:16px;transform:rotate(155deg) scaleX(-1)}
+
+  /* hanging lamps */
+  .hang{
+    position:absolute;top:0;z-index:20;
+    display:flex;flex-direction:column;align-items:center;pointer-events:none;
+  }
+  .hang.l{left:40px}.hang.r{right:40px}
+  .hang-thread{width:1.5px;height:32px;background:linear-gradient(to bottom,var(--gold-dim),transparent)}
+  .hang-lamp{animation:glowPulse 2.2s ease-in-out infinite}
+  .hang.r .hang-lamp{animation-delay:.55s}
+
+  /* hero content */
+  .hero-content{
+    position:relative;z-index:10;
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;width:100%;max-width:600px;
+  }
+  .rib{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .rib-line{flex:1;max-width:70px;height:1px;background:linear-gradient(to right,transparent,var(--gold))}
+  .rib-line.r{background:linear-gradient(to left,transparent,var(--gold))}
+  .rib-ctr{display:flex;gap:5px;align-items:center}
+  .rdiam{width:5px;height:5px;background:var(--gold);transform:rotate(45deg)}
+  .rdiam.sm{width:3px;height:3px;opacity:.6}
+
+  .tamil-hd{
+    font-family:'Noto Serif Tamil',serif;font-size:12px;letter-spacing:4px;
+    color:var(--gold-dim);text-transform:uppercase;margin-bottom:6px;
+  }
+  .n-kate{
+    font-family:'Playfair Display',serif;font-size:96px;font-weight:900;
+    color:var(--crimson);letter-spacing:-3px;display:block;line-height:.9;
+    text-shadow:3px 3px 0 rgba(92,10,30,.1);
+  }
+  .amp-row{display:flex;align-items:center;justify-content:center;margin:-8px 0 -12px}
+  .amp-c{
+    font-family:'IM Fell English',serif;font-size:114px;color:var(--gold);line-height:1;
+    text-shadow:2px 4px 14px rgba(200,146,42,.4);
+  }
+  .amp-fili{display:flex;flex-direction:column;gap:5px;margin-left:8px;margin-top:16px}
+  .amp-fili div{height:1.5px;background:linear-gradient(to right,var(--gold),transparent);border-radius:2px}
+  .n-drew{
+    font-family:'Playfair Display',serif;font-size:96px;font-weight:900;
+    color:var(--crimson);letter-spacing:-3px;display:block;line-height:.9;
+    text-shadow:3px 3px 0 rgba(92,10,30,.1);
+  }
+  .names-under{
+    display:flex;align-items:center;gap:8px;justify-content:center;margin:10px 0 14px;
+  }
+  .nu-gem{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 6px var(--gold-lt)}
+  .nu-line{height:1px;width:42px;background:var(--gold)}
+
+  .tamil-sub{
+    font-family:'Noto Serif Tamil',serif;font-size:18px;
+    color:var(--saffron);letter-spacing:2px;margin-bottom:22px;
+  }
+  .gsep{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:20px}
+  .gsep-line{height:1px;width:60px;background:linear-gradient(to right,transparent,var(--gold-dim))}
+  .gsep-line.r{background:linear-gradient(to left,transparent,var(--gold-dim))}
+  .gsep-mid{display:flex;align-items:center;gap:7px}
+  .gsep-lotus{font-size:16px;color:var(--gold);filter:drop-shadow(0 0 4px rgba(200,146,42,.5))}
+
+  .venue-card{
+    background:linear-gradient(135deg,rgba(92,10,30,.04),rgba(200,146,42,.07));
+    border:1px solid rgba(200,146,42,.32);border-radius:2px;
+    padding:16px 44px;position:relative;
+  }
+  .venue-card::before,.venue-card::after{
+    content:'';position:absolute;width:10px;height:10px;
+    border-color:var(--gold);border-style:solid;
+  }
+  .venue-card::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+  .venue-card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+  .venue-name{
+    font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
+    color:var(--crimson);letter-spacing:1px;
+  }
+  .venue-rule{width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(200,146,42,.5),transparent);margin:8px 0}
+  .venue-det{
+    font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;
+    color:#6a3a2a;display:flex;align-items:center;gap:14px;justify-content:center;letter-spacing:1px;
+  }
+  .vsep{color:var(--gold);font-size:18px}
+
+  .footer-motif{margin-top:18px;display:flex;align-items:center;gap:10px;justify-content:center;opacity:.42}
+
+  /* bottom row — terminal + chatbot */
+  .bottom-row{
+    display:flex;align-items:flex-start;gap:14px;
+    width:100%;max-width:820px;
+    padding:24px 0 10px;
+    flex-wrap:wrap;justify-content:center;
+    position:relative;z-index:10;
+  }
+  .terminal{
+    flex:1;min-width:260px;max-width:400px;
+    background:rgba(7,2,11,.92);border-radius:8px;overflow:hidden;
+    box-shadow:0 8px 32px rgba(0,0,0,.55),0 0 0 1px rgba(200,150,42,.18);
+  }
+  .th{display:flex;align-items:center;gap:7px;padding:8px 13px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.06)}
+  .td{width:10px;height:10px;border-radius:50%}
+  .td.r{background:#ff5f57}.td.y{background:#febc2e}.td.g{background:#28c840}
+  .tt{font-family:'Source Code Pro',monospace;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,.28);flex:1;text-align:center}
+  .tb{padding:10px 13px;font-family:'Source Code Pro',monospace;font-size:9px;line-height:1.7;color:#9a9a9a}
+  .gc{margin-bottom:9px}
+  .gh{color:#e8a840}.gt{color:#7bcfed;font-size:8px}.gcmd{color:#eee}
+  .gm{color:#565656;font-size:8.5px}
+  .gg{color:#7bc870}.gy{color:#e2c060}.gr{color:#e05858}.gor{color:#e89040}
+
+  .chatbot{display:flex;flex-direction:column;align-items:flex-end;gap:10px;padding-top:8px}
+  .cbubble{
+    background:#fff;border-radius:16px 16px 2px 16px;
+    padding:13px 17px;max-width:210px;
+    font-family:'Cormorant Garamond',serif;font-size:14px;line-height:1.45;
+    color:#333;box-shadow:0 6px 24px rgba(0,0,0,.15),0 0 0 1px rgba(200,150,42,.2);
+    border-left:3px solid var(--gold);
+  }
+  .cavatar{
+    width:58px;height:58px;border-radius:50%;
+    background:radial-gradient(circle at 40% 35%,#8b1a2a,#3a0712);
+    border:3px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;font-size:26px;
+    box-shadow:0 4px 18px rgba(92,10,30,.5),0 0 0 1px var(--gold-dim);
+    cursor:pointer;transition:transform .2s,box-shadow .2s;
+  }
+  .cavatar:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(200,146,42,.5)}
+
+  /* ════════════════════════════════
+    SECTION SHARED STYLES
+  ════════════════════════════════ */
+  .section-header{
+    text-align:center;
+    padding:70px 24px 40px;
+    position:relative;z-index:5;
+  }
+  .section-tag{
+    font-family:'Noto Serif Tamil',serif;font-size:11px;letter-spacing:4px;
+    text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;
+  }
+  .section-title{
+    font-family:'Playfair Display',serif;font-size:52px;font-weight:900;
+    color:var(--crimson);letter-spacing:-1px;line-height:1;
+    text-shadow:2px 2px 0 rgba(92,10,30,.08);
+  }
+  .section-rule{
+    display:flex;align-items:center;gap:12px;justify-content:center;
+    margin:16px 0;
+  }
+  .sr-line{height:1px;width:60px;background:linear-gradient(to right,transparent,var(--gold))}
+  .sr-line.r{background:linear-gradient(to left,transparent,var(--gold))}
+  .sr-gem{width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+  .section-sub{
+    font-family:'Cormorant Garamond',serif;font-size:18px;
+    color:#6a3a2a;letter-spacing:1px;font-style:italic;
+  }
+
+  /* ════════════════════════════════
+    SECTION 2 — OUR STORY
+  ════════════════════════════════ */
+  #our-story{
+    background:var(--crimson);
+    position:relative;overflow:hidden;
+  }
+  #our-story .silk-weave{position:absolute;inset:0;pointer-events:none;
+    background-image:
+      repeating-linear-gradient(90deg,transparent 0,rgba(200,146,42,.035) 1px,transparent 2px,transparent 9px),
+      repeating-linear-gradient(0deg,transparent 0,rgba(200,146,42,.035) 1px,transparent 2px,transparent 9px);}
+  #our-story .section-title{color:var(--gold-lt)}
+  #our-story .section-tag{color:var(--gold-dim)}
+  #our-story .section-sub{color:rgba(248,227,178,.7)}
+  #our-story .sr-line{background:linear-gradient(to right,transparent,var(--gold-lt))}
+  #our-story .sr-line.r{background:linear-gradient(to left,transparent,var(--gold-lt))}
+
+  .story-timeline{
+    max-width:700px;margin:0 auto;
+    padding:0 24px 70px;
+    position:relative;z-index:5;
+  }
+  .story-timeline::before{
+    content:'';position:absolute;
+    left:50%;top:0;bottom:0;
+    width:1.5px;
+    background:linear-gradient(to bottom,transparent,var(--gold),var(--gold),transparent);
+    transform:translateX(-50%);
+    opacity:.4;
+  }
+  .story-item{
+    display:flex;align-items:flex-start;gap:24px;
+    margin-bottom:48px;
+    position:relative;
+  }
+  .story-item:nth-child(even){flex-direction:row-reverse}
+  .story-dot{
+    flex-shrink:0;width:44px;height:44px;
+    background:var(--crimson-mid);
+    border:2px solid var(--gold);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;
+    position:relative;z-index:2;
+    box-shadow:0 0 0 4px rgba(200,146,42,.15), 0 0 16px rgba(200,146,42,.2);
+    flex-shrink:0;
+  }
+  .story-card{
+    flex:1;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(200,146,42,.2);
+    border-radius:4px;
+    padding:20px 24px;
+    backdrop-filter:blur(4px);
+  }
+  .story-year{
+    font-family:'Source Code Pro',monospace;font-size:9px;letter-spacing:3px;
+    color:var(--gold);text-transform:uppercase;margin-bottom:6px;
+  }
+  .story-heading{
+    font-family:'Playfair Display',serif;font-size:22px;font-weight:700;
+    color:var(--gold-lt);margin-bottom:8px;
+  }
+  .story-text{
+    font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.7;
+    color:rgba(248,227,178,.75);
+  }
+  .story-commit{
+    font-family:'Source Code Pro',monospace;font-size:8.5px;
+    color:rgba(200,200,200,.4);margin-top:10px;letter-spacing:.5px;
+  }
+
+  /* ════════════════════════════════
+    SECTION 3 — WEDDING PARTY
+  ════════════════════════════════ */
+  #wedding-party{
+    background:var(--ivory);
+    position:relative;overflow:hidden;
+  }
+  #wedding-party .right-tex{position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 30% 30%,rgba(200,150,42,.06) 0%,transparent 55%),
+      radial-gradient(ellipse at 70% 70%,rgba(92,10,30,.04) 0%,transparent 50%);
+  }
+
+  .party-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:24px;
+    max-width:900px;margin:0 auto;
+    padding:0 24px 70px;
+    position:relative;z-index:5;
+  }
+  .party-card{
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;
+    padding:28px 20px;
+    background:linear-gradient(135deg,rgba(92,10,30,.03),rgba(200,146,42,.06));
+    border:1px solid rgba(200,146,42,.25);
+    border-radius:4px;
+    position:relative;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .party-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(92,10,30,.12)}
+  .party-card::before,.party-card::after{
+    content:'';position:absolute;width:9px;height:9px;
+    border-color:var(--gold);border-style:solid;opacity:.6;
+  }
+  .party-card::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+  .party-card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+  .party-avatar{
+    width:90px;height:90px;border-radius:50%;
+    background:linear-gradient(135deg,var(--crimson-mid),var(--crimson-drk));
+    border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-size:36px;margin-bottom:16px;
+    box-shadow:0 4px 16px rgba(92,10,30,.25);
+  }
+  .party-role{
+    font-family:'Noto Serif Tamil',serif;font-size:9px;letter-spacing:3px;
+    text-transform:uppercase;color:var(--gold);margin-bottom:6px;
+  }
+  .party-name{
+    font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
+    color:var(--crimson);margin-bottom:6px;
+  }
+  .party-desc{
+    font-family:'Cormorant Garamond',serif;font-size:14px;
+    color:#7a4a3a;line-height:1.6;font-style:italic;
+  }
+
+  /* ════════════════════════════════
+    SECTION 4 — GALLERY
+  ════════════════════════════════ */
+  #gallery{
+    background:var(--crimson);
+    position:relative;overflow:hidden;
+  }
+  #gallery .silk-weave{position:absolute;inset:0;pointer-events:none;
+    background-image:
+      repeating-linear-gradient(90deg,transparent 0,rgba(200,146,42,.035) 1px,transparent 2px,transparent 9px),
+      repeating-linear-gradient(0deg,transparent 0,rgba(200,146,42,.035) 1px,transparent 2px,transparent 9px);}
+  #gallery .section-title{color:var(--gold-lt)}
+  #gallery .section-tag{color:var(--gold-dim)}
+  #gallery .section-sub{color:rgba(248,227,178,.7)}
+  #gallery .sr-line{background:linear-gradient(to right,transparent,var(--gold-lt))}
+  #gallery .sr-line.r{background:linear-gradient(to left,transparent,var(--gold-lt))}
+
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:3px;
+    max-width:900px;margin:0 auto;
+    padding:0 24px 70px;
+    position:relative;z-index:5;
+  }
+  .gallery-grid .g-wide{grid-column:span 2}
+  .g-cell{
+    position:relative;overflow:hidden;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(200,146,42,.18);
+    aspect-ratio:1;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:all .3s;
+  }
+  .g-cell:hover .g-overlay{opacity:1}
+  .g-cell.g-wide{aspect-ratio:2/1}
+  .g-cell.g-tall{aspect-ratio:1/1.5}
+  .g-bg{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .g-overlay{
+    position:absolute;inset:0;
+    background:rgba(92,10,30,.7);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transition:opacity .3s;z-index:2;
+  }
+  .g-overlay-txt{
+    font-family:'Cormorant Garamond',serif;font-size:14px;
+    color:var(--gold-lt);letter-spacing:2px;text-transform:uppercase;text-align:center;
+  }
+  .g-placeholder{
+    width:100%;height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:10px;color:rgba(200,146,42,.3);font-size:10px;letter-spacing:1px;
+  }
+
+  /* ─── FOOTER ─── */
+  .site-footer{
+    background:var(--crimson-drk);
+    padding:40px 24px;
+    text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .footer-brand{
+    font-family:'Playfair Display',serif;font-size:28px;font-weight:900;
+    color:var(--gold-lt);letter-spacing:2px;margin-bottom:10px;
+  }
+  .footer-rule{
+    width:180px;height:1px;
+    background:linear-gradient(to right,transparent,var(--gold),transparent);
+    margin:12px auto;
+  }
+  .footer-sub{
+    font-family:'Noto Serif Tamil',serif;font-size:12px;
+    color:var(--gold-dim);letter-spacing:3px;
+  }
+  .footer-copy{
+    font-family:'Cormorant Garamond',serif;font-size:13px;
+    color:rgba(200,146,42,.35);margin-top:16px;letter-spacing:1px;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-in{
+    opacity:0;transform:translateY(32px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+
+  .cur{animation:blink 1s step-end infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width:680px){
+    .sticky-nav .nav-links{display:none}
+    .hamburger{display:flex}
+    .n-kate,.n-drew{font-size:70px}
+    .amp-c{font-size:84px}
+    .hero-content-row{flex-direction:column;align-items:center;gap:20px}
+    .date-col{flex-direction:row;gap:8px;align-items:center}
+    .date-tail{display:none}
+    .date-lbl{display:none}
+    .arch-wrap{width:260px}
+    .dn{font-size:44px}
+    .gallery-grid{grid-template-columns:repeat(2,1fr)}
+    .gallery-grid .g-wide{grid-column:span 2}
+    .section-title{font-size:40px}
+    .sticky-nav{padding:0 20px}
+    .hang.l{left:16px}.hang.r{right:16px}
+    .party-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  }
+  @media(max-width:420px){
+    .n-kate,.n-drew{font-size:56px}
+    .amp-c{font-size:68px}
+    .arch-wrap{width:220px}
+    .venue-card{padding:12px 20px}
+    .gallery-grid{grid-template-columns:1fr 1fr}
+    .section-title{font-size:34px}
+  }
+  </style>
+
+</head>
+
+
+<body>
+
+<canvas id="petals-canvas"></canvas>
+
+<!-- Kolam borders -->
+<div class="kb t">
+  
+  <svg viewBox="0 0 1200 26" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    
+    <defs>
+      <pattern id="kp" x="0" y="0" width="52" height="26" patternUnits="userSpaceOnUse">
+        <rect width="52" height="26" fill="#5C0A1E"/>
+        <circle cx="26" cy="13" r="3"  fill="#C9922A" opacity=".85"/>
+        <circle cx="26" cy="13" r="6"  fill="none" stroke="#C9922A" stroke-width=".8" opacity=".5"/>
+        <circle cx="26" cy="13" r="10" fill="none" stroke="#C9922A" stroke-width=".5" opacity=".3"/>
+        <line x1="0"  y1="13" x2="16" y2="13" stroke="#C9922A" stroke-width=".7" opacity=".4"/>
+        <line x1="36" y1="13" x2="52" y2="13" stroke="#C9922A" stroke-width=".7" opacity=".4"/>
+        <line x1="26" y1="0"  x2="26" y2="3"  stroke="#C9922A" stroke-width=".7" opacity=".4"/>
+        <line x1="26" y1="23" x2="26" y2="26" stroke="#C9922A" stroke-width=".7" opacity=".4"/>
+        <polygon points="26,3 28,7 26,6 24,7" fill="#C9922A" opacity=".5"/>
+        <polygon points="26,23 28,19 26,20 24,19" fill="#C9922A" opacity=".5"/>
+      </pattern>
+      <linearGradient id="gl" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="transparent"/>
+        <stop offset="50%" stop-color="#E8BE5A" stop-opacity=".7"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </linearGradient>
+    </defs>
+
+    <rect width="100%" height="26" fill="url(#kp)"/>
+    <rect y="25" width="100%" height="1" fill="url(#gl)"/>
+  </svg>
+</div>
+
+
+<div class="kb b">
+
+  <svg viewBox="0 0 1200 26" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="26" fill="url(#kp)"/>
+    <rect width="100%" height="1" fill="url(#gl)"/>
+  </svg>
+
+</div>
+
+<!-- ═══ STICKY NAV ═══ -->
+<nav class="sticky-nav">
+
+  <div class="nav-brand">Tamilalakan &amp; Sagana <span>· திருமணம்</span></div>
+  
+  <div class="nav-links">
+    <a onclick="scrollTo('home')" class="active">Home</a>
+    <a onclick="scrollTo('our-story')">Our Story</a>
+    <a onclick="scrollTo('wedding-party')">Wedding Party</a>
+    <a onclick="scrollTo('gallery')">Gallery</a>
+  </div>
+
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+
+</nav>
+
+
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="scrollTo('home');toggleMenu()">Home</a>
+  <a onclick="scrollTo('our-story');toggleMenu()">Our Story</a>
+  <a onclick="scrollTo('wedding-party');toggleMenu()">Wedding Party</a>
+  <a onclick="scrollTo('gallery');toggleMenu()">Gallery</a>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 1 — HOME
+═══════════════════════════════════════ -->
+<section id="home">
+
+  <!-- CRIMSON HERO TOP -->
+  <div class="hero-top">
+    <div class="silk-weave"></div>
+    <div class="left-glow"></div>
+
+    <!-- Decorative peacock corner art - left -->
+    <svg class="leaf-abs" style="bottom:80px;left:0;opacity:.18;pointer-events:none" width="110" height="180" viewBox="0 0 110 180" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <ellipse cx="30" cy="130" rx="9" ry="38" fill="#1a6b4a" transform="rotate(-30 30 130)"/>
+        <ellipse cx="18" cy="120" rx="8" ry="32" fill="#145040" transform="rotate(-50 18 120)"/>
+        <ellipse cx="10" cy="105" rx="7" ry="26" fill="#1a6b4a" transform="rotate(-65 10 105)"/>
+        <ellipse cx="45" cy="135" rx="9" ry="36" fill="#218a5e" transform="rotate(-15 45 135)"/>
+        <ellipse cx="58" cy="138" rx="8" ry="32" fill="#1a6b4a" transform="rotate(-3 58 138)"/>
+        <circle cx="28" cy="94"  r="6" fill="#1a3a7a"/><circle cx="28" cy="94"  r="3.5" fill="#C9922A"/><circle cx="28" cy="94"  r="1.5" fill="#fff"/>
+        <circle cx="14" cy="80"  r="5" fill="#1a3a7a"/><circle cx="14" cy="80"  r="3"   fill="#C9922A"/><circle cx="14" cy="80"  r="1.2" fill="#fff"/>
+        <circle cx="46" cy="98"  r="6" fill="#1a3a7a"/><circle cx="46" cy="98"  r="3.5" fill="#C9922A"/><circle cx="46" cy="98"  r="1.5" fill="#fff"/>
+        <circle cx="60" cy="100" r="5" fill="#1a3a7a"/><circle cx="60" cy="100" r="3"   fill="#C9922A"/><circle cx="60" cy="100" r="1.2" fill="#fff"/>
+      </g>
+      <ellipse cx="50" cy="148" rx="14" ry="20" fill="#1a6b4a"/>
+      <path d="M44,128 Q40,108 44,92 Q50,82 56,92 Q60,108 56,128 Z" fill="#1565a0"/>
+      <circle cx="50" cy="80" r="12" fill="#1565a0"/>
+      <line x1="50" y1="68" x2="43" y2="55" stroke="#C9922A" stroke-width="1.5"/>
+      <line x1="50" y1="68" x2="50" y2="53" stroke="#C9922A" stroke-width="1.5"/>
+      <line x1="50" y1="68" x2="57" y2="55" stroke="#C9922A" stroke-width="1.5"/>
+      <circle cx="43" cy="54" r="4" fill="#C9922A"/>
+      <circle cx="50" cy="52" r="4" fill="#E8BE5A"/>
+      <circle cx="57" cy="54" r="4" fill="#C9922A"/>
+    </svg>
+
+    <!-- Decorative peacock corner art - right -->
+    <svg class="leaf-abs" style="bottom:80px;right:0;opacity:.18;pointer-events:none;transform:scaleX(-1)" width="110" height="180" viewBox="0 0 110 180" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <ellipse cx="30" cy="130" rx="9" ry="38" fill="#1a6b4a" transform="rotate(-30 30 130)"/>
+        <ellipse cx="18" cy="120" rx="8" ry="32" fill="#145040" transform="rotate(-50 18 120)"/>
+        <ellipse cx="10" cy="105" rx="7" ry="26" fill="#1a6b4a" transform="rotate(-65 10 105)"/>
+        <ellipse cx="45" cy="135" rx="9" ry="36" fill="#218a5e" transform="rotate(-15 45 135)"/>
+        <ellipse cx="58" cy="138" rx="8" ry="32" fill="#1a6b4a" transform="rotate(-3 58 138)"/>
+        <circle cx="28" cy="94"  r="6" fill="#1a3a7a"/><circle cx="28" cy="94"  r="3.5" fill="#C9922A"/><circle cx="28" cy="94"  r="1.5" fill="#fff"/>
+        <circle cx="14" cy="80"  r="5" fill="#1a3a7a"/><circle cx="14" cy="80"  r="3"   fill="#C9922A"/><circle cx="14" cy="80"  r="1.2" fill="#fff"/>
+        <circle cx="46" cy="98"  r="6" fill="#1a3a7a"/><circle cx="46" cy="98"  r="3.5" fill="#C9922A"/><circle cx="46" cy="98"  r="1.5" fill="#fff"/>
+        <circle cx="60" cy="100" r="5" fill="#1a3a7a"/><circle cx="60" cy="100" r="3"   fill="#C9922A"/><circle cx="60" cy="100" r="1.2" fill="#fff"/>
+      </g>
+      <ellipse cx="50" cy="148" rx="14" ry="20" fill="#1a6b4a"/>
+      <path d="M44,128 Q40,108 44,92 Q50,82 56,92 Q60,108 56,128 Z" fill="#1565a0"/>
+      <circle cx="50" cy="80" r="12" fill="#1565a0"/>
+      <line x1="50" y1="68" x2="43" y2="55" stroke="#C9922A" stroke-width="1.5"/>
+      <line x1="50" y1="68" x2="50" y2="53" stroke="#C9922A" stroke-width="1.5"/>
+      <line x1="50" y1="68" x2="57" y2="55" stroke="#C9922A" stroke-width="1.5"/>
+      <circle cx="43" cy="54" r="4" fill="#C9922A"/>
+      <circle cx="50" cy="52" r="4" fill="#E8BE5A"/>
+      <circle cx="57" cy="54" r="4" fill="#C9922A"/>
+    </svg>
+
+    <!-- Murugan blessing text top of section -->
+    <div style="position:absolute;top:32px;left:50%;transform:translateX(-50%);
+                font-family:'Noto Serif Tamil',serif;font-size:11px;letter-spacing:3px;
+                color:rgba(200,146,42,.35);white-space:nowrap;z-index:5">
+      ஓம் சரவணபவ · OM SARAVANABHAVA
+    </div>
+
+    <!-- Banana leaves -->
+    <svg class="leaf-abs" style="top:-20px;left:-16px;transform:rotate(32deg)" width="130" height="210" viewBox="0 0 115 195" xmlns="http://www.w3.org/2000/svg" opacity=".75">
+      <path d="M57,185 C28,136 4,76 18,18 C32,-18 66,10 76,48 C90,108 76,156 57,185Z" fill="#1A5C3A"/>
+      <path d="M57,185 C48,136 38,76 43,18" stroke="#0D3A22" stroke-width="1.4" fill="none"/>
+      <path d="M43,58 C54,53 68,56 76,48" stroke="#0D3A22" stroke-width=".7" fill="none" opacity=".55"/>
+      <path d="M42,88 C54,83 69,86 78,78" stroke="#0D3A22" stroke-width=".7" fill="none" opacity=".55"/>
+    </svg>
+    <svg class="leaf-abs" style="top:-10px;right:30px;transform:rotate(-38deg) scaleX(-1)" width="100" height="165" viewBox="0 0 115 195" xmlns="http://www.w3.org/2000/svg" opacity=".6">
+      <path d="M57,185 C28,136 4,76 18,18 C32,-18 66,10 76,48 C90,108 76,156 57,185Z" fill="#145040"/>
+      <path d="M57,185 C48,136 38,76 43,18" stroke="#0D3A22" stroke-width="1.2" fill="none"/>
+    </svg>
+    <svg class="leaf-abs" style="bottom:-20px;left:-5px;transform:rotate(-22deg) scaleX(-1)" width="115" height="185" viewBox="0 0 115 195" xmlns="http://www.w3.org/2000/svg" opacity=".72">
+      <path d="M57,185 C28,136 4,76 18,18 C32,-18 66,10 76,48 C90,108 76,156 57,185Z" fill="#1A5C3A"/>
+      <path d="M57,185 C48,136 38,76 43,18" stroke="#0D3A22" stroke-width="1.4" fill="none"/>
+    </svg>
+    <svg class="leaf-abs" style="bottom:0;right:-10px;transform:rotate(150deg)" width="115" height="185" viewBox="0 0 115 195" xmlns="http://www.w3.org/2000/svg" opacity=".6">
+      <path d="M57,185 C28,136 4,76 18,18 C32,-18 66,10 76,48 C90,108 76,156 57,185Z" fill="#145040"/>
+      <path d="M57,185 C48,136 38,76 43,18" stroke="#0D3A22" stroke-width="1.2" fill="none"/>
+    </svg>
+
+    <!-- Brand badge -->
+    <div class="brand-badge">
+      <span class="brand-tamil">க</span>
+      <div class="brand-center">
+        <span class="brand-name">Tamilalakan &amp; Sagana</span>
+        <div class="brand-rule"></div>
+        <span class="brand-sub">திருமணம் · THIRUMANAM 2026</span>
+      </div>
+      <span class="brand-tamil">க</span>
+    </div>
+
+    <!-- Garland -->
+    <div class="garland-row">
+      <svg width="260" height="30" viewBox="0 0 260 30" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,5 Q65,28 130,10 Q195,28 260,5" fill="none" stroke="rgba(200,150,42,.35)" stroke-width=".8"/>
+        <g fill="white" opacity=".85">
+          <circle cx="10" cy="7" r="2.5"/><circle cx="30" cy="17" r="2.5"/><circle cx="50" cy="23" r="2.5"/>
+          <circle cx="70" cy="26" r="2.5"/><circle cx="90" cy="21" r="2.5"/><circle cx="110" cy="14" r="2.5"/>
+          <circle cx="130" cy="10" r="2.5"/><circle cx="150" cy="14" r="2.5"/>
+          <circle cx="170" cy="21" r="2.5"/><circle cx="190" cy="26" r="2.5"/>
+          <circle cx="210" cy="23" r="2.5"/><circle cx="230" cy="17" r="2.5"/><circle cx="250" cy="7" r="2.5"/>
+        </g>
+        <g fill="#f5c518" opacity=".72">
+          <circle cx="20" cy="12" r="2"/><circle cx="40" cy="20" r="2"/><circle cx="60" cy="25" r="2"/>
+          <circle cx="80" cy="24" r="2"/><circle cx="100" cy="18" r="2"/><circle cx="120" cy="11" r="2"/>
+          <circle cx="140" cy="11" r="2"/><circle cx="160" cy="18" r="2"/>
+          <circle cx="180" cy="24" r="2"/><circle cx="200" cy="25" r="2"/>
+          <circle cx="220" cy="20" r="2"/><circle cx="240" cy="12" r="2"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Date + Arch row -->
+    <div class="hero-content-row">
+      <!-- Date -->
+      <div class="date-col">
+        <div class="date-diam"></div>
+        <div class="dn">20</div><div class="dr"></div>
+        <div class="dn">08</div><div class="dr"></div>
+        <div class="dn">23</div>
+        <div class="dr" style="margin-top:8px"></div>
+        <div class="date-lbl">திருமண நாள்</div>
+        <div class="date-tail"></div>
+      </div>
+
+      <!-- Arch -->
+      <div class="arch-wrap">
+        <svg viewBox="0 0 280 376" style="width:100%;display:block;position:relative;z-index:3" xmlns="http://www.w3.org/2000/svg">
+          <defs><filter id="gw"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <path d="M24,376 L24,148 Q24,18 140,18 Q256,18 256,148 L256,376Z" fill="none" stroke="#C9922A" stroke-width=".8" opacity=".22" filter="url(#gw)"/>
+          <path d="M34,376 L34,152 Q34,30 140,30 Q246,30 246,152 L246,376Z" fill="rgba(55,10,20,.22)" stroke="#C9922A" stroke-width="1.6" opacity=".72"/>
+          <path d="M48,376 L48,158 Q48,46 140,46 Q232,46 232,158 L232,376Z" fill="none" stroke="#C9922A" stroke-width=".75" opacity=".42"/>
+          <g filter="url(#gw)">
+            <circle cx="140" cy="18" r="14" fill="none" stroke="#C9922A" stroke-width="1.5" opacity=".85"/>
+            <circle cx="140" cy="18" r="8"  fill="none" stroke="#C9922A" stroke-width="1"   opacity=".7"/>
+            <circle cx="140" cy="18" r="4"  fill="#C9922A" opacity=".95"/>
+            <g stroke="#C9922A" fill="none" stroke-width=".8" opacity=".65">
+              <ellipse cx="140" cy="18" rx="17" ry="7" transform="rotate(0   140 18)"/>
+              <ellipse cx="140" cy="18" rx="17" ry="7" transform="rotate(60  140 18)"/>
+              <ellipse cx="140" cy="18" rx="17" ry="7" transform="rotate(120 140 18)"/>
+            </g>
+          </g>
+          <g fill="none" stroke="#C9922A" stroke-width=".7" opacity=".5">
+            <rect x="116" y="-2"  width="48" height="8" rx="1"/>
+            <rect x="122" y="-12" width="36" height="8" rx="1"/>
+            <rect x="128" y="-22" width="24" height="8" rx="1"/>
+            <polygon points="140,-22 148,-30 132,-30"/>
+          </g>
+          <g stroke="#C9922A" fill="none" opacity=".48">
+            <rect x="26" y="195" width="13" height="60" rx="1" stroke-width=".8"/>
+            <line x1="26" y1="215" x2="39" y2="215" stroke-width=".5"/>
+            <line x1="26" y1="230" x2="39" y2="230" stroke-width=".5"/>
+            <line x1="26" y1="245" x2="39" y2="245" stroke-width=".5"/>
+            <rect x="21" y="190" width="23" height="8" rx="1" stroke-width=".8"/>
+            <rect x="19" y="358" width="27" height="8" rx="1" stroke-width=".8"/>
+          </g>
+          <g stroke="#C9922A" fill="none" opacity=".48">
+            <rect x="241" y="195" width="13" height="60" rx="1" stroke-width=".8"/>
+            <line x1="241" y1="215" x2="254" y2="215" stroke-width=".5"/>
+            <line x1="241" y1="230" x2="254" y2="230" stroke-width=".5"/>
+            <line x1="241" y1="245" x2="254" y2="245" stroke-width=".5"/>
+            <rect x="236" y="190" width="23" height="8" rx="1" stroke-width=".8"/>
+            <rect x="234" y="358" width="27" height="8" rx="1" stroke-width=".8"/>
+          </g>
+          <g opacity=".32" stroke="#C9922A" fill="none" stroke-width=".6">
+            <line x1="24" y1="176" x2="256" y2="176"/>
+            <circle cx="80"  cy="176" r="4.5"/><circle cx="140" cy="176" r="4.5"/><circle cx="200" cy="176" r="4.5"/>
+            <circle cx="80"  cy="176" r="8"/><circle cx="140" cy="176" r="8"/><circle cx="200" cy="176" r="8"/>
+          </g>
+          <g opacity=".38" stroke="#C9922A" fill="rgba(200,146,42,.07)" stroke-width=".8">
+            <path d="M36,122 C30,102 38,86 48,91 C55,94 52,110 44,120 Z"/>
+            <path d="M244,122 C250,102 242,86 232,91 C225,94 228,110 236,120 Z"/>
+          </g>
+        </svg>
+        <div class="arch-photo-slot">
+          <div class="ph">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="rgba(255,255,255,.18)"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v1h20v-1c0-3.3-6.7-5-10-5z"/></svg>
+            <span>Couple Photo</span>
+          </div>
+        </div>
+        <div class="bride-circle">
+          <div class="ph" style="background:linear-gradient(135deg,#b06040,#7a2030,#3d1c1c)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(255,255,255,.18)"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v1h20v-1c0-3.3-6.7-5-10-5z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Murugan Blessing + Peacock Row -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:28px;margin-top:36px;position:relative;z-index:10;">
+
+      <!-- Left Peacock -->
+      <svg width="72" height="110" viewBox="0 0 72 110" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 8px rgba(200,146,42,.4));animation:glowPulse 3s ease-in-out infinite">
+        <!-- tail feathers fanned left -->
+        <g opacity=".85">
+          <ellipse cx="20" cy="80" rx="7" ry="26" fill="#1a6b4a" transform="rotate(-35 20 80)"/>
+          <ellipse cx="12" cy="75" rx="6" ry="22" fill="#145040" transform="rotate(-55 12 75)"/>
+          <ellipse cx="8"  cy="65" rx="5" ry="18" fill="#1a6b4a" transform="rotate(-70 8 65)"/>
+          <ellipse cx="30" cy="82" rx="7" ry="26" fill="#1a6b4a" transform="rotate(-20 30 82)"/>
+          <ellipse cx="38" cy="84" rx="6" ry="24" fill="#145040" transform="rotate(-8  38 84)"/>
+          <!-- eye spots -->
+          <circle cx="18" cy="58" r="4" fill="#1a3a7a" opacity=".7"/>
+          <circle cx="18" cy="58" r="2.5" fill="#C9922A" opacity=".8"/>
+          <circle cx="18" cy="58" r="1.2" fill="#fff" opacity=".9"/>
+          <circle cx="9"  cy="50" r="3.5" fill="#1a3a7a" opacity=".7"/>
+          <circle cx="9"  cy="50" r="2" fill="#C9922A" opacity=".8"/>
+          <circle cx="9"  cy="50" r="1" fill="#fff" opacity=".9"/>
+          <circle cx="30" cy="60" r="4" fill="#1a3a7a" opacity=".7"/>
+          <circle cx="30" cy="60" r="2.5" fill="#C9922A" opacity=".8"/>
+          <circle cx="30" cy="60" r="1.2" fill="#fff" opacity=".9"/>
+          <circle cx="39" cy="62" r="3.5" fill="#1a3a7a" opacity=".7"/>
+          <circle cx="39" cy="62" r="2" fill="#C9922A" opacity=".8"/>
+          <circle cx="39" cy="62" r="1" fill="#fff" opacity=".9"/>
+        </g>
+        <!-- body -->
+        <ellipse cx="36" cy="88" rx="10" ry="14" fill="#1a6b4a"/>
+        <ellipse cx="36" cy="84" rx="8"  ry="10" fill="#218a5e"/>
+        <!-- neck -->
+        <path d="M33,74 Q30,62 33,52 Q36,46 39,52 Q42,62 39,74 Z" fill="#1565a0"/>
+        <!-- head -->
+        <circle cx="36" cy="48" r="8" fill="#1565a0"/>
+        <!-- crest -->
+        <line x1="36" y1="40" x2="30" y2="30" stroke="#C9922A" stroke-width="1.2"/>
+        <line x1="36" y1="40" x2="36" y2="28" stroke="#C9922A" stroke-width="1.2"/>
+        <line x1="36" y1="40" x2="42" y2="30" stroke="#C9922A" stroke-width="1.2"/>
+        <circle cx="30" cy="29" r="3" fill="#C9922A"/>
+        <circle cx="36" cy="27" r="3" fill="#E8BE5A"/>
+        <circle cx="42" cy="29" r="3" fill="#C9922A"/>
+        <!-- beak -->
+        <path d="M36,51 L40,54 L36,55 Z" fill="#E8BE5A"/>
+        <!-- eye -->
+        <circle cx="38" cy="47" r="2.5" fill="#fff"/>
+        <circle cx="38.5" cy="47" r="1.4" fill="#111"/>
+        <!-- legs -->
+        <line x1="32" y1="100" x2="29" y2="108" stroke="#8B6A20" stroke-width="1.5"/>
+        <line x1="40" y1="100" x2="43" y2="108" stroke="#8B6A20" stroke-width="1.5"/>
+        <line x1="29" y1="108" x2="25" y2="110" stroke="#8B6A20" stroke-width="1.2"/>
+        <line x1="29" y1="108" x2="30" y2="111" stroke="#8B6A20" stroke-width="1.2"/>
+        <line x1="43" y1="108" x2="47" y2="110" stroke="#8B6A20" stroke-width="1.2"/>
+        <line x1="43" y1="108" x2="44" y2="111" stroke="#8B6A20" stroke-width="1.2"/>
+      </svg>
+
+      <!-- Murugan SVG Silhouette -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <svg width="90" height="148" viewBox="0 0 90 148" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 14px rgba(232,190,90,.55));animation:glowPulse 2.8s ease-in-out infinite .4s">
+          <!-- divine glow halo -->
+          <circle cx="45" cy="28" r="22" fill="none" stroke="#E8BE5A" stroke-width="1" opacity=".5"/>
+          <circle cx="45" cy="28" r="18" fill="none" stroke="#E8BE5A" stroke-width=".6" opacity=".35"/>
+          <!-- halo rays -->
+          <g stroke="#E8BE5A" stroke-width=".7" opacity=".4">
+            <line x1="45" y1="6"  x2="45" y2="2"/>
+            <line x1="57" y1="9"  x2="60" y2="6"/>
+            <line x1="64" y1="19" x2="68" y2="17"/>
+            <line x1="65" y1="31" x2="69" y2="31"/>
+            <line x1="60" y1="42" x2="63" y2="46"/>
+            <line x1="33" y1="9"  x2="30" y2="6"/>
+            <line x1="26" y1="19" x2="22" y2="17"/>
+            <line x1="25" y1="31" x2="21" y2="31"/>
+            <line x1="30" y1="42" x2="27" y2="46"/>
+          </g>
+          <!-- crown / kireedam -->
+          <path d="M32,16 L36,8 L40,14 L45,6 L50,14 L54,8 L58,16 Z" fill="#C9922A" opacity=".9"/>
+          <path d="M33,17 Q45,12 57,17" fill="#E8BE5A" opacity=".7"/>
+          <!-- head -->
+          <circle cx="45" cy="28" r="13" fill="#C4956A"/>
+          <!-- face features -->
+          <circle cx="40" cy="27" r="2" fill="#7a3530" opacity=".6"/>
+          <circle cx="50" cy="27" r="2" fill="#7a3530" opacity=".6"/>
+          <path d="M42,32 Q45,35 48,32" fill="none" stroke="#7a3530" stroke-width="1" opacity=".7"/>
+          <!-- tilak / pottu -->
+          <line x1="45" y1="19" x2="45" y2="23" stroke="#C9922A" stroke-width="1.5"/>
+          <circle cx="45" cy="23" r="1.5" fill="#C9922A"/>
+          <!-- neck / shoulders -->
+          <path d="M36,40 Q30,50 28,70 Q26,90 28,110 Q32,130 45,135 Q58,130 62,110 Q64,90 62,70 Q60,50 54,40 Z" fill="#8B5E40"/>
+          <!-- dhoti -->
+          <path d="M28,95 Q20,110 22,130 Q30,140 45,142 Q60,140 68,130 Q70,110 62,95 Z" fill="#C9922A" opacity=".85"/>
+          <path d="M30,95 Q40,100 45,98 Q50,100 60,95" fill="none" stroke="#E8BE5A" stroke-width=".8" opacity=".6"/>
+          <!-- vel (spear) - right hand -->
+          <line x1="62" y1="55" x2="80" y2="20" stroke="#E8BE5A" stroke-width="2" opacity=".9"/>
+          <polygon points="80,12 76,20 84,20" fill="#E8BE5A" opacity=".95"/>
+          <!-- abhaya mudra - left hand raised -->
+          <path d="M28,60 Q18,52 16,44 Q15,38 20,37 Q24,36 26,42" fill="#C4956A" stroke="#8B5E40" stroke-width=".8"/>
+          <path d="M20,37 Q22,30 26,32 Q28,34 27,40" fill="#C4956A"/>
+          <!-- right arm holding vel -->
+          <path d="M62,55 Q70,50 74,42 Q76,36 72,34 Q68,33 65,40" fill="#C4956A" stroke="#8B5E40" stroke-width=".8"/>
+          <!-- ornaments -->
+          <path d="M34,42 Q45,46 56,42" fill="none" stroke="#E8BE5A" stroke-width="1.2" opacity=".7"/>
+          <circle cx="45" cy="44" r="2" fill="#E8BE5A" opacity=".8"/>
+          <!-- ear rings -->
+          <circle cx="32" cy="29" r="2.5" fill="#E8BE5A" opacity=".7"/>
+          <circle cx="58" cy="29" r="2.5" fill="#E8BE5A" opacity=".7"/>
+          <!-- feet -->
+          <ellipse cx="35" cy="143" rx="7" ry="4" fill="#C4956A"/>
+          <ellipse cx="55" cy="143" rx="7" ry="4" fill="#C4956A"/>
+          <!-- anklets -->
+          <path d="M28,140 Q35,144 42,140" fill="none" stroke="#E8BE5A" stroke-width="1" opacity=".6"/>
+          <path d="M48,140 Q55,144 62,140" fill="none" stroke="#E8BE5A" stroke-width="1" opacity=".6"/>
+        </svg>
+        <!-- Murugan label -->
+        <div style="font-family:'Noto Serif Tamil',serif;font-size:10px;letter-spacing:3px;color:var(--gold-dim);text-align:center">
+          முருகன் துணை<br>
+          <span style="font-size:8px;color:rgba(200,146,42,.45);letter-spacing:2px">MURUGAN BLESS THIS UNION</span>
+        </div>
+      </div>
+
+      <!-- Right Peacock (mirrored) -->
+      <svg width="72" height="110" viewBox="0 0 72 110" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1);filter:drop-shadow(0 0 8px rgba(200,146,42,.4));animation:glowPulse 3s ease-in-out infinite .5s">
+        <g opacity=".85">
+          <ellipse cx="20" cy="80" rx="7" ry="26" fill="#1a6b4a" transform="rotate(-35 20 80)"/>
+          <ellipse cx="12" cy="75" rx="6" ry="22" fill="#145040" transform="rotate(-55 12 75)"/>
+          <ellipse cx="8"  cy="65" rx="5" ry="18" fill="#1a6b4a" transform="rotate(-70 8 65)"/>
+          <ellipse cx="30" cy="82" rx="7" ry="26" fill="#1a6b4a" transform="rotate(-20 30 82)"/>
+          <ellipse cx="38" cy="84" rx="6" ry="24" fill="#145040" transform="rotate(-8  38 84)"/>
+          <circle cx="18" cy="58" r="4" fill="#1a3a7a" opacity=".7"/>
+          <circle cx="18" cy="58" r="2.5" fill="#C9922A" opacity=".8"/>
+          <circle cx="18" cy="58" r="1.2" fill="#fff" opacity=".9"/>
+          <circle cx="9"  cy="50" r="3.5" fill="#1a3a7a" opacity=".7"/>
+          <circle cx="9"  cy="50" r="2" fill="#C9922A" opacity=".8"/>
+          <circle cx="9"  cy="50" r="1" fill="#fff" opacity=".9"/>
+          <circle cx="30" cy="60" r="4" fill="#1a3a7a" opacity=".7"/>
+          <circle cx="30" cy="60" r="2.5" fill="#C9922A" opacity=".8"/>
+          <circle cx="30" cy="60" r="1.2" fill="#fff" opacity=".9"/>
+          <circle cx="39" cy="62" r="3.5" fill="#1a3a7a" opacity=".7"/>
+          <circle cx="39" cy="62" r="2" fill="#C9922A" opacity=".8"/>
+          <circle cx="39" cy="62" r="1" fill="#fff" opacity=".9"/>
+        </g>
+        <ellipse cx="36" cy="88" rx="10" ry="14" fill="#1a6b4a"/>
+        <ellipse cx="36" cy="84" rx="8"  ry="10" fill="#218a5e"/>
+        <path d="M33,74 Q30,62 33,52 Q36,46 39,52 Q42,62 39,74 Z" fill="#1565a0"/>
+        <circle cx="36" cy="48" r="8" fill="#1565a0"/>
+        <line x1="36" y1="40" x2="30" y2="30" stroke="#C9922A" stroke-width="1.2"/>
+        <line x1="36" y1="40" x2="36" y2="28" stroke="#C9922A" stroke-width="1.2"/>
+        <line x1="36" y1="40" x2="42" y2="30" stroke="#C9922A" stroke-width="1.2"/>
+        <circle cx="30" cy="29" r="3" fill="#C9922A"/>
+        <circle cx="36" cy="27" r="3" fill="#E8BE5A"/>
+        <circle cx="42" cy="29" r="3" fill="#C9922A"/>
+        <path d="M36,51 L40,54 L36,55 Z" fill="#E8BE5A"/>
+        <circle cx="38" cy="47" r="2.5" fill="#fff"/>
+        <circle cx="38.5" cy="47" r="1.4" fill="#111"/>
+        <line x1="32" y1="100" x2="29" y2="108" stroke="#8B6A20" stroke-width="1.5"/>
+        <line x1="40" y1="100" x2="43" y2="108" stroke="#8B6A20" stroke-width="1.5"/>
+        <line x1="29" y1="108" x2="25" y2="110" stroke="#8B6A20" stroke-width="1.2"/>
+        <line x1="29" y1="108" x2="30" y2="111" stroke="#8B6A20" stroke-width="1.2"/>
+        <line x1="43" y1="108" x2="47" y2="110" stroke="#8B6A20" stroke-width="1.2"/>
+        <line x1="43" y1="108" x2="44" y2="111" stroke="#8B6A20" stroke-width="1.2"/>
+      </svg>
+
+    </div>
+
+    <!-- Social -->
+    <div class="social-bar">
+      <div class="si"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+      <div class="si"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div>
+      <div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-lt)" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="var(--gold-lt)" stroke="none"/></svg></div>
+      <div class="si"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></div>
+    </div>
+
+    <!-- Wave divider -->
+    <div class="wave-divider">
+      <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,60 L0,20 Q180,60 360,30 Q540,0 720,30 Q900,60 1080,30 Q1260,0 1440,30 L1440,60 Z" fill="#FFFBF0"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- CREAM HERO BOTTOM -->
+  <div class="hero-bottom">
+    <div class="right-tex"></div>
+    <div class="kolam-wm">
+      <svg width="370" height="370" viewBox="0 0 370 370" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#C9922A" stroke-width="1">
+          <circle cx="185" cy="185" r="155"/><circle cx="185" cy="185" r="125"/>
+          <circle cx="185" cy="185" r="95"/><circle cx="185" cy="185" r="65"/><circle cx="185" cy="185" r="35"/>
+          <polygon points="185,30 195,165 330,185 195,205 185,340 175,205 40,185 175,165" opacity=".6"/>
+          <line x1="88"  y1="88"  x2="282" y2="282" opacity=".28"/>
+          <line x1="282" y1="88"  x2="88"  y2="282" opacity=".28"/>
+          <path d="M185,30 Q222,78 185,116 Q148,78 185,30Z" opacity=".4"/>
+          <path d="M185,340 Q222,292 185,254 Q148,292 185,340Z" opacity=".4"/>
+          <path d="M30,185 Q78,222 116,185 Q78,148 30,185Z" opacity=".4"/>
+          <path d="M340,185 Q292,222 254,185 Q292,148 340,185Z" opacity=".4"/>
+        </g>
+        <g fill="#C9922A" opacity=".55">
+          <circle cx="88" cy="88" r="4"/><circle cx="282" cy="88" r="4"/>
+          <circle cx="88" cy="282" r="4"/><circle cx="282" cy="282" r="4"/>
+          <circle cx="185" cy="185" r="6"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="peacock br">🦚</div>
+    <div class="peacock tl">🦚</div>
+
+    <div class="hang l">
+      <div class="hang-thread"></div>
+      <svg class="hang-lamp" width="22" height="38" viewBox="0 0 30 52" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 9px rgba(255,155,30,.85))">
+        <ellipse cx="15" cy="7" rx="3.5" ry="6" fill="#FFB830" opacity=".9"/>
+        <ellipse cx="15" cy="9" rx="2.1" ry="3.5" fill="#FFF4A0" opacity=".8"/>
+        <line x1="15" y1="13" x2="15" y2="16" stroke="#8B5E20" stroke-width="1.2"/>
+        <path d="M8,16 Q15,14 22,16 L20,22 Q15,24 10,22Z" fill="#C9922A"/>
+        <ellipse cx="15" cy="16" rx="7" ry="1.7" fill="#E8BE5A"/>
+        <rect x="14" y="22" width="2.3" height="14" fill="#B8760A" rx="1"/>
+        <ellipse cx="15" cy="37" rx="9" ry="3" fill="#C9922A"/>
+        <rect x="7" y="36" width="16" height="4" fill="#B8760A" rx="1.5"/>
+      </svg>
+    </div>
+    <div class="hang r">
+      <div class="hang-thread"></div>
+      <svg class="hang-lamp" width="22" height="38" viewBox="0 0 30 52" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 9px rgba(255,155,30,.85));animation-delay:.6s">
+        <ellipse cx="15" cy="7" rx="3.5" ry="6" fill="#FFB830" opacity=".9"/>
+        <ellipse cx="15" cy="9" rx="2.1" ry="3.5" fill="#FFF4A0" opacity=".8"/>
+        <line x1="15" y1="13" x2="15" y2="16" stroke="#8B5E20" stroke-width="1.2"/>
+        <path d="M8,16 Q15,14 22,16 L20,22 Q15,24 10,22Z" fill="#C9922A"/>
+        <ellipse cx="15" cy="16" rx="7" ry="1.7" fill="#E8BE5A"/>
+        <rect x="14" y="22" width="2.3" height="14" fill="#B8760A" rx="1"/>
+        <ellipse cx="15" cy="37" rx="9" ry="3" fill="#C9922A"/>
+        <rect x="7" y="36" width="16" height="4" fill="#B8760A" rx="1.5"/>
+      </svg>
+    </div>
+
+    <div class="hero-content fade-in">
+      <div class="rib">
+        <div class="rib-line"></div>
+        <div class="rib-ctr">
+          <div class="rdiam sm"></div><div class="rdiam"></div>
+          <span style="font-size:14px;color:var(--gold);line-height:1">✿</span>
+          <div class="rdiam"></div><div class="rdiam sm"></div>
+        </div>
+        <div class="rib-line r"></div>
+      </div>
+      <div class="tamil-hd">திருமண வாழ்த்துக்கள்</div>
+      <div class="names-hero">
+        <span class="n-kate">Tamilalakan</span>
+        <div class="amp-row">
+          <span class="amp-c">&amp;</span>
+          <div class="amp-fili">
+            <div style="width:56px"></div>
+            <div style="width:38px;opacity:.68"></div>
+            <div style="width:22px;opacity:.38"></div>
+          </div>
+        </div>
+        <span class="n-drew">Sagana</span>
+      </div>
+      <div class="names-under">
+        <div class="nu-line"></div><div class="nu-gem"></div>
+        <span style="font-size:18px;color:var(--gold);filter:drop-shadow(0 0 5px rgba(200,150,42,.55))">✦</span>
+        <div class="nu-gem"></div><div class="nu-line"></div>
+      </div>
+      <div class="tamil-sub">அதத்த மடாம் &amp; அவிறுவாம்</div>
+      <div class="gsep">
+        <div class="gsep-line"></div>
+        <div class="gsep-mid">
+          <span class="gsep-lotus">❁</span>
+          <span style="font-size:9px;color:var(--gold-dim);letter-spacing:3px;font-family:'Noto Serif Tamil',serif">THIRUMANAM</span>
+          <span class="gsep-lotus">❁</span>
+        </div>
+        <div class="gsep-line r"></div>
+      </div>
+      <div class="venue-card">
+        <div class="venue-name">Seaside Hotel, New York</div>
+        <div class="venue-rule"></div>
+        <div class="venue-det">
+          <span>August 20, 2023</span><span class="vsep">✦</span><span>Starts at 9AM</span>
+        </div>
+      </div>
+      <div class="footer-motif">
+        <span style="color:var(--gold);font-size:12px">❋</span>
+        <span style="font-family:'Noto Serif Tamil',serif;font-size:9px;letter-spacing:3px;color:var(--gold-dim)">கேட் &amp; டிரூ · 2023</span>
+        <span style="color:var(--gold);font-size:12px">❋</span>
+      </div>
+    </div>
+
+    <!-- Bottom row: terminal + chatbot -->
+    <div class="bottom-row">
+      <div class="terminal">
+        <div class="th">
+          <div class="td r"></div><div class="td y"></div><div class="td g"></div>
+          <div class="tt">love-story.git — bash</div>
+        </div>
+        <div class="tb">
+          <div class="gc">
+            <div>commit <span class="gh">8f3a2b3</span> <span class="gt">[UEAD → main]</span></div>
+            <div>git init <span class="gcmd">"The Meeting"</span></div>
+            <div class="gm">Initial commit. Branch: initial_connection.</div>
+            <div class="gm">Date: 2021. Connection established in Chennai.</div>
+          </div>
+          <div class="gc">
+            <div>commit <span class="gh">4c5a1d2</span></div>
+            <div>Added <span class="gg">"First_Trip.py"</span></div>
+            <div class="gm">Minor changes. Branch: mahabalipuram_vaca.</div>
+            <div class="gm">Date: 2022. Shared data sync completed.</div>
+          </div>
+          <div class="gc">
+            <div>commit <span class="gh">7a5f6b9</span></div>
+            <div>git merge --no-ff <span class="gcmd">"The Proposal"</span></div>
+            <div class="gm">Branch: proposal accepted. Conflicts: 0.</div>
+            <div class="gm">Target date fixed. State: <span class="gy">ENGAGED.</span></div>
+          </div>
+          <div class="gc">
+            <div>commit <span class="gor">Pending</span></div>
+            <div>Deploy Muhurtham v1.0 <span class="gg">(PROD)</span></div>
+            <div class="gm">Final deployment. State: <span class="gr">WEDDING.</span> Jo<span class="cur">_</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="chatbot">
+        <div class="cbubble" id="chatBubble">
+          🙏 <strong>வணக்கம்!</strong> I am your AI Wedding Concierge. Ask me anything about the venue or schedule.
+        </div>
+        <div class="cavatar" id="chatAvatar">🤖</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SECTION 2 — OUR STORY
+═══════════════════════════════════════ -->
+<section id="our-story">
+  <div class="silk-weave"></div>
+  <div class="section-header fade-in">
+    <div class="section-tag">எங்கள் காதல் கதை</div>
+    <div class="section-title">Our Story</div>
+    <div class="section-rule">
+      <div class="sr-line"></div><div class="sr-gem"></div>
+      <span style="font-size:20px;color:var(--gold-lt)">❁</span>
+      <div class="sr-gem"></div><div class="sr-line r"></div>
+    </div>
+    <div class="section-sub">A love written in the stars — and in git commits</div>
+  </div>
+
+  <div class="story-timeline fade-in">
+    <div class="story-item">
+      <div class="story-dot">🏛️</div>
+      <div class="story-card">
+        <div class="story-year">2021 · JANUARY</div>
+        <div class="story-heading">The First Meeting</div>
+        <div class="story-text">Two souls crossed paths in the heart of Chennai. A chance encounter at a cultural festival — she wore a Kancheevaram silk saree, he was lost in the crowd. Their eyes met across a garland of marigolds.</div>
+        <div class="story-commit">git init "The Meeting" — Branch: initial_connection</div>
+      </div>
+    </div>
+    <div class="story-item">
+      <div class="story-dot">🌊</div>
+      <div class="story-card">
+        <div class="story-year">2022 · MARCH</div>
+        <div class="story-heading">Mahabalipuram Trip</div>
+        <div class="story-text">Their first journey together — walking barefoot on the shores of Mahabalipuram, watching the Shore Temple glow at sunset. The ancient stones witnessed the beginning of something eternal.</div>
+        <div class="story-commit">Added "First_Trip.py" — Branch: mahabalipuram_vaca</div>
+      </div>
+    </div>
+    <div class="story-item">
+      <div class="story-dot">💍</div>
+      <div class="story-card">
+        <div class="story-year">2022 · DECEMBER</div>
+        <div class="story-heading">The Proposal</div>
+        <div class="story-text">Under the stars at Marina Beach, with the sound of waves and the glow of a thousand diyas, he asked the question that changed everything. She said yes before he finished the sentence.</div>
+        <div class="story-commit">git merge --no-ff "The Proposal" — State: ENGAGED</div>
+      </div>
+    </div>
+    <div class="story-item">
+      <div class="story-dot">🌸</div>
+      <div class="story-card">
+        <div class="story-year">2023 · AUGUST</div>
+        <div class="story-heading">Forever Begins</div>
+        <div class="story-text">Two families, two cultures, one beautiful union. The Muhurtham is set. The jasmine garlands are ready. The kolam is drawn. And two hearts are about to become one soul.</div>
+        <div class="story-commit">Deploy Muhurtham v1.0 (PROD) — State: WEDDING 🎊</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MURUGAN PEACOCK DIVIDER BAND ═══ -->
+<div style="background:var(--crimson-drk);padding:28px 24px;text-align:center;position:relative;overflow:hidden;border-top:1px solid rgba(200,146,42,.2);border-bottom:1px solid rgba(200,146,42,.2)">
+  <!-- silk weave -->
+  <div style="position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(90deg,transparent 0,rgba(200,146,42,.03) 1px,transparent 2px,transparent 9px),repeating-linear-gradient(0deg,transparent 0,rgba(200,146,42,.03) 1px,transparent 2px,transparent 9px)"></div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;position:relative;z-index:5">
+    <!-- Peacock feather motif left -->
+    <svg width="48" height="72" viewBox="0 0 48 72" xmlns="http://www.w3.org/2000/svg" style="opacity:.75">
+      <ellipse cx="24" cy="52" rx="6" ry="20" fill="#1a6b4a" transform="rotate(-20 24 52)"/>
+      <ellipse cx="16" cy="48" rx="5" ry="16" fill="#145040" transform="rotate(-40 16 48)"/>
+      <ellipse cx="32" cy="54" rx="5" ry="18" fill="#218a5e" transform="rotate(0  32 54)"/>
+      <circle cx="22" cy="34" r="5" fill="#1a3a7a"/><circle cx="22" cy="34" r="3" fill="#C9922A"/><circle cx="22" cy="34" r="1.4" fill="#fff"/>
+      <circle cx="13" cy="30" r="4" fill="#1a3a7a"/><circle cx="13" cy="30" r="2.4" fill="#C9922A"/><circle cx="13" cy="30" r="1.1" fill="#fff"/>
+      <circle cx="32" cy="36" r="4" fill="#1a3a7a"/><circle cx="32" cy="36" r="2.4" fill="#C9922A"/><circle cx="32" cy="36" r="1.1" fill="#fff"/>
+      <line x1="24" y1="66" x2="24" y2="72" stroke="#8B6A20" stroke-width="1.5"/>
+    </svg>
+
+    <!-- Gold rule left -->
+    <div style="height:1px;width:60px;background:linear-gradient(to right,transparent,var(--gold));flex-shrink:0"></div>
+
+    <!-- Murugan mini silhouette + text -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+      <svg width="44" height="68" viewBox="0 0 90 148" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 8px rgba(232,190,90,.5))">
+        <circle cx="45" cy="28" r="20" fill="none" stroke="#E8BE5A" stroke-width="1" opacity=".5"/>
+        <path d="M32,16 L36,8 L40,14 L45,6 L50,14 L54,8 L58,16 Z" fill="#C9922A" opacity=".9"/>
+        <path d="M33,17 Q45,12 57,17" fill="#E8BE5A" opacity=".7"/>
+        <circle cx="45" cy="28" r="13" fill="#C4956A"/>
+        <circle cx="40" cy="27" r="1.8" fill="#7a3530" opacity=".6"/>
+        <circle cx="50" cy="27" r="1.8" fill="#7a3530" opacity=".6"/>
+        <path d="M42,32 Q45,35 48,32" fill="none" stroke="#7a3530" stroke-width="1" opacity=".7"/>
+        <line x1="45" y1="19" x2="45" y2="23" stroke="#C9922A" stroke-width="1.5"/>
+        <circle cx="45" cy="23" r="1.5" fill="#C9922A"/>
+        <path d="M36,40 Q30,50 28,70 Q26,90 28,110 Q32,130 45,135 Q58,130 62,110 Q64,90 62,70 Q60,50 54,40 Z" fill="#8B5E40"/>
+        <path d="M28,95 Q20,110 22,130 Q30,140 45,142 Q60,140 68,130 Q70,110 62,95 Z" fill="#C9922A" opacity=".85"/>
+        <line x1="62" y1="55" x2="80" y2="20" stroke="#E8BE5A" stroke-width="2" opacity=".9"/>
+        <polygon points="80,12 76,20 84,20" fill="#E8BE5A" opacity=".95"/>
+        <path d="M28,60 Q18,52 16,44 Q15,38 20,37 Q24,36 26,42" fill="#C4956A"/>
+        <circle cx="32" cy="29" r="2.5" fill="#E8BE5A" opacity=".7"/>
+        <circle cx="58" cy="29" r="2.5" fill="#E8BE5A" opacity=".7"/>
+      </svg>
+      <div style="font-family:'Noto Serif Tamil',serif;font-size:9px;letter-spacing:3px;color:var(--gold-dim)">முருகன் அருள்</div>
+      <div style="font-family:'Playfair Display',serif;font-size:11px;color:rgba(200,146,42,.5);letter-spacing:2px">LORD MURUGAN'S BLESSINGS</div>
+    </div>
+
+    <!-- Gold rule right -->
+    <div style="height:1px;width:60px;background:linear-gradient(to left,transparent,var(--gold));flex-shrink:0"></div>
+
+    <!-- Peacock feather motif right (mirrored) -->
+    <svg width="48" height="72" viewBox="0 0 48 72" xmlns="http://www.w3.org/2000/svg" style="opacity:.75;transform:scaleX(-1)">
+      <ellipse cx="24" cy="52" rx="6" ry="20" fill="#1a6b4a" transform="rotate(-20 24 52)"/>
+      <ellipse cx="16" cy="48" rx="5" ry="16" fill="#145040" transform="rotate(-40 16 48)"/>
+      <ellipse cx="32" cy="54" rx="5" ry="18" fill="#218a5e" transform="rotate(0  32 54)"/>
+      <circle cx="22" cy="34" r="5" fill="#1a3a7a"/><circle cx="22" cy="34" r="3" fill="#C9922A"/><circle cx="22" cy="34" r="1.4" fill="#fff"/>
+      <circle cx="13" cy="30" r="4" fill="#1a3a7a"/><circle cx="13" cy="30" r="2.4" fill="#C9922A"/><circle cx="13" cy="30" r="1.1" fill="#fff"/>
+      <circle cx="32" cy="36" r="4" fill="#1a3a7a"/><circle cx="32" cy="36" r="2.4" fill="#C9922A"/><circle cx="32" cy="36" r="1.1" fill="#fff"/>
+      <line x1="24" y1="66" x2="24" y2="72" stroke="#8B6A20" stroke-width="1.5"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ════════ WEDDING PARTY ════════ -->
+<section id="wedding-party">
+  <div class="right-tex"></div>
+  <div class="section-header fade-in">
+    <div class="section-tag">திருமண குழு</div>
+    <div class="section-title">Wedding Party</div>
+    <div class="section-rule">
+      <div class="sr-line" style="background:linear-gradient(to right,transparent,var(--gold))"></div>
+      <div class="sr-gem"></div>
+      <span style="font-size:20px;color:var(--gold)">❁</span>
+      <div class="sr-gem"></div>
+      <div class="sr-line r" style="background:linear-gradient(to left,transparent,var(--gold))"></div>
+    </div>
+    <div class="section-sub" style="color:#6a3a2a">The people who made this possible</div>
+  </div>
+
+  <div class="party-grid fade-in">
+    <div class="party-card">
+      <div class="party-avatar">👰</div>
+      <div class="party-role">Bride</div>
+      <div class="party-name">Sagana</div>
+      <div class="party-desc">The radiant bride, draped in Kancheevaram silk, carrying jasmine in her hair and love in her heart.</div>
+    </div>
+    <div class="party-card">
+      <div class="party-avatar">🤵</div>
+      <div class="party-role">Groom</div>
+      <div class="party-name">Tamilalakan</div>
+      <div class="party-desc">The devoted groom, adorned in a silk veshti, whose eyes light up every time she walks into the room.</div>
+    </div>
+    <div class="party-card">
+      <div class="party-avatar">🌸</div>
+      <div class="party-role">Maid of Honour</div>
+      <div class="party-name">Priya</div>
+      <div class="party-desc">Best friend, confidante, and the one who helped pick the saree. Sister of the heart since college.</div>
+    </div>
+    <div class="party-card">
+      <div class="party-avatar">🎖️</div>
+      <div class="party-role">Best Man</div>
+      <div class="party-name">Arjun</div>
+      <div class="party-desc">The friend who was there from day one — and who lost the bet that this day would never come.</div>
+    </div>
+    <div class="party-card">
+      <div class="party-avatar">🌺</div>
+      <div class="party-role">Bridesmaid</div>
+      <div class="party-name">Meera</div>
+      <div class="party-desc">Dancer, decorator, and keeper of all the emotional speeches that haven't been delivered yet.</div>
+    </div>
+    <div class="party-card">
+      <div class="party-avatar">🌿</div>
+      <div class="party-role">Groomsman</div>
+      <div class="party-name">Karthik</div>
+      <div class="party-desc">The one who drove 14 hours to be here. Enough said. The definition of loyalty.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MURUGAN PEACOCK DIVIDER BAND 2 ═══ -->
+<div style="background:linear-gradient(90deg,var(--crimson) 0%,var(--crimson-drk) 50%,var(--crimson) 100%);padding:22px 24px;text-align:center;position:relative;overflow:hidden;border-top:1px solid rgba(200,146,42,.2);border-bottom:1px solid rgba(200,146,42,.2)">
+  <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;position:relative;z-index:5">
+    <span style="font-family:'Noto Serif Tamil',serif;font-size:13px;color:var(--gold-dim);letter-spacing:2px">🦚</span>
+    <div style="height:1px;width:50px;background:linear-gradient(to right,transparent,var(--gold))"></div>
+    <span style="font-family:'Noto Serif Tamil',serif;font-size:11px;letter-spacing:3px;color:rgba(200,146,42,.55)">வேலுமுருகன் துணை நிற்பான்</span>
+    <div style="height:1px;width:50px;background:linear-gradient(to left,transparent,var(--gold))"></div>
+    <span style="font-family:'Noto Serif Tamil',serif;font-size:13px;color:var(--gold-dim);letter-spacing:2px">🦚</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 4 — GALLERY
+═══════════════════════════════════════ -->
+<section id="gallery">
+  <div class="silk-weave"></div>
+  <div class="section-header fade-in">
+    <div class="section-tag">நினைவுகள்</div>
+    <div class="section-title">Gallery</div>
+    <div class="section-rule">
+      <div class="sr-line"></div><div class="sr-gem"></div>
+      <span style="font-size:20px;color:var(--gold-lt)">❁</span>
+      <div class="sr-gem"></div><div class="sr-line r"></div>
+    </div>
+    <div class="section-sub">Moments frozen in gold</div>
+  </div>
+
+  <div class="gallery-grid fade-in">
+    <div class="g-cell g-wide">
+      <div class="g-bg"><div class="ph" style="width:100%;height:100%;background:linear-gradient(135deg,#8b2535,#5c0a1e)">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(200,146,42,.3)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        <span style="font-size:9px;letter-spacing:2px">Engagement</span>
+      </div></div>
+      <div class="g-overlay"><div class="g-overlay-txt">Engagement<br><span style="font-size:10px;opacity:.7">Chennai · Dec 2022</span></div></div>
+    </div>
+    <div class="g-cell">
+      <div class="g-bg"><div class="ph" style="width:100%;height:100%;background:linear-gradient(135deg,#7a3530,#4a0f1c)">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="rgba(200,146,42,.3)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        <span style="font-size:9px;letter-spacing:2px">Pre-Wedding</span>
+      </div></div>
+      <div class="g-overlay"><div class="g-overlay-txt">Pre-Wedding<br><span style="font-size:10px;opacity:.7">Mahabalipuram</span></div></div>
+    </div>
+    <div class="g-cell">
+      <div class="g-bg"><div class="ph" style="width:100%;height:100%;background:linear-gradient(135deg,#c4956a,#8b5e40)">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="rgba(255,255,255,.2)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        <span style="font-size:9px;letter-spacing:2px">Haldi Ceremony</span>
+      </div></div>
+      <div class="g-overlay"><div class="g-overlay-txt">Haldi<br><span style="font-size:10px;opacity:.7">Celebration</span></div></div>
+    </div>
+    <div class="g-cell">
+      <div class="g-bg"><div class="ph" style="width:100%;height:100%;background:linear-gradient(135deg,#1a5c3a,#0d3a22)">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="rgba(200,146,42,.4)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        <span style="font-size:9px;letter-spacing:2px">Mehendi Night</span>
+      </div></div>
+      <div class="g-overlay"><div class="g-overlay-txt">Mehendi Night<br><span style="font-size:10px;opacity:.7">Sangeet</span></div></div>
+    </div>
+    <div class="g-cell">
+      <div class="g-bg"><div class="ph" style="width:100%;height:100%;background:linear-gradient(135deg,#9a6e1e,#5c3a0a)">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="rgba(255,255,255,.25)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        <span style="font-size:9px;letter-spacing:2px">Reception</span>
+      </div></div>
+      <div class="g-overlay"><div class="g-overlay-txt">Reception<br><span style="font-size:10px;opacity:.7">Celebration</span></div></div>
+    </div>
+    <div class="g-cell g-wide">
+      <div class="g-bg"><div class="ph" style="width:100%;height:100%;background:linear-gradient(135deg,#5c0a1e,#3a0712)">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(200,146,42,.3)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        <span style="font-size:9px;letter-spacing:2px">The Wedding Day</span>
+      </div></div>
+      <div class="g-overlay"><div class="g-overlay-txt">The Wedding Day ✦<br><span style="font-size:10px;opacity:.7">August 20, 2023</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <!-- Peacock pair flanking footer brand -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:6px;flex-wrap:wrap">
+    <!-- Left peacock footer -->
+    <svg width="55" height="85" viewBox="0 0 72 110" xmlns="http://www.w3.org/2000/svg" style="opacity:.55;filter:drop-shadow(0 0 6px rgba(200,146,42,.3))">
+      <g opacity=".85">
+        <ellipse cx="20" cy="80" rx="7" ry="26" fill="#1a6b4a" transform="rotate(-35 20 80)"/>
+        <ellipse cx="12" cy="75" rx="6" ry="22" fill="#145040" transform="rotate(-55 12 75)"/>
+        <ellipse cx="30" cy="82" rx="7" ry="26" fill="#1a6b4a" transform="rotate(-20 30 82)"/>
+        <ellipse cx="38" cy="84" rx="6" ry="24" fill="#145040" transform="rotate(-8  38 84)"/>
+        <circle cx="18" cy="58" r="4" fill="#1a3a7a"/><circle cx="18" cy="58" r="2.5" fill="#C9922A"/><circle cx="18" cy="58" r="1.2" fill="#fff"/>
+        <circle cx="30" cy="60" r="4" fill="#1a3a7a"/><circle cx="30" cy="60" r="2.5" fill="#C9922A"/><circle cx="30" cy="60" r="1.2" fill="#fff"/>
+      </g>
+      <ellipse cx="36" cy="88" rx="10" ry="14" fill="#1a6b4a"/>
+      <path d="M33,74 Q30,62 33,52 Q36,46 39,52 Q42,62 39,74 Z" fill="#1565a0"/>
+      <circle cx="36" cy="48" r="8" fill="#1565a0"/>
+      <line x1="36" y1="40" x2="30" y2="30" stroke="#C9922A" stroke-width="1.2"/>
+      <line x1="36" y1="40" x2="36" y2="28" stroke="#C9922A" stroke-width="1.2"/>
+      <line x1="36" y1="40" x2="42" y2="30" stroke="#C9922A" stroke-width="1.2"/>
+      <circle cx="36" cy="27" r="3" fill="#E8BE5A"/>
+    </svg>
+
+    <!-- Murugan footer silhouette -->
+    <svg width="52" height="80" viewBox="0 0 90 148" xmlns="http://www.w3.org/2000/svg" style="opacity:.5;filter:drop-shadow(0 0 10px rgba(232,190,90,.4))">
+      <circle cx="45" cy="28" r="22" fill="none" stroke="#E8BE5A" stroke-width="1" opacity=".6"/>
+      <path d="M32,16 L36,8 L40,14 L45,6 L50,14 L54,8 L58,16 Z" fill="#C9922A"/>
+      <path d="M33,17 Q45,12 57,17" fill="#E8BE5A" opacity=".7"/>
+      <circle cx="45" cy="28" r="13" fill="#C4956A"/>
+      <line x1="45" y1="19" x2="45" y2="23" stroke="#C9922A" stroke-width="1.5"/>
+      <circle cx="45" cy="23" r="1.5" fill="#C9922A"/>
+      <path d="M36,40 Q30,50 28,70 Q26,90 28,110 Q32,130 45,135 Q58,130 62,110 Q64,90 62,70 Q60,50 54,40 Z" fill="#8B5E40"/>
+      <path d="M28,95 Q20,110 22,130 Q30,140 45,142 Q60,140 68,130 Q70,110 62,95 Z" fill="#C9922A" opacity=".85"/>
+      <line x1="62" y1="55" x2="80" y2="20" stroke="#E8BE5A" stroke-width="2" opacity=".9"/>
+      <polygon points="80,12 76,20 84,20" fill="#E8BE5A"/>
+    </svg>
+
+    <!-- Right peacock footer (mirrored) -->
+    <svg width="55" height="85" viewBox="0 0 72 110" xmlns="http://www.w3.org/2000/svg" style="opacity:.55;transform:scaleX(-1);filter:drop-shadow(0 0 6px rgba(200,146,42,.3))">
+      <g opacity=".85">
+        <ellipse cx="20" cy="80" rx="7" ry="26" fill="#1a6b4a" transform="rotate(-35 20 80)"/>
+        <ellipse cx="12" cy="75" rx="6" ry="22" fill="#145040" transform="rotate(-55 12 75)"/>
+        <ellipse cx="30" cy="82" rx="7" ry="26" fill="#1a6b4a" transform="rotate(-20 30 82)"/>
+        <ellipse cx="38" cy="84" rx="6" ry="24" fill="#145040" transform="rotate(-8  38 84)"/>
+        <circle cx="18" cy="58" r="4" fill="#1a3a7a"/><circle cx="18" cy="58" r="2.5" fill="#C9922A"/><circle cx="18" cy="58" r="1.2" fill="#fff"/>
+        <circle cx="30" cy="60" r="4" fill="#1a3a7a"/><circle cx="30" cy="60" r="2.5" fill="#C9922A"/><circle cx="30" cy="60" r="1.2" fill="#fff"/>
+      </g>
+      <ellipse cx="36" cy="88" rx="10" ry="14" fill="#1a6b4a"/>
+      <path d="M33,74 Q30,62 33,52 Q36,46 39,52 Q42,62 39,74 Z" fill="#1565a0"/>
+      <circle cx="36" cy="48" r="8" fill="#1565a0"/>
+      <line x1="36" y1="40" x2="30" y2="30" stroke="#C9922A" stroke-width="1.2"/>
+      <line x1="36" y1="40" x2="36" y2="28" stroke="#C9922A" stroke-width="1.2"/>
+      <line x1="36" y1="40" x2="42" y2="30" stroke="#C9922A" stroke-width="1.2"/>
+      <circle cx="36" cy="27" r="3" fill="#E8BE5A"/>
+    </svg>
+  </div>
+
+  <div class="footer-brand">Tamilalakan &amp; Sagana</div>
+  <div style="font-family:'Noto Serif Tamil',serif;font-size:13px;color:var(--gold-dim);letter-spacing:3px">கேட் &amp; டிரூ</div>
+  <div class="footer-rule"></div>
+  <div class="footer-sub">THIRUMANAM · AUGUST 20, 2023 · NEW YORK</div>
+  <div style="font-family:'Noto Serif Tamil',serif;font-size:11px;color:rgba(200,146,42,.4);letter-spacing:2px;margin-top:8px">
+    முருகன் அருளால் இணைந்த இரு உள்ளங்கள்
+  </div>
+  <div class="footer-copy">Made with 🙏 and Kancheevaram love</div>
+</footer>
+
+<script>
+/* ── Petals ── */
+(function(){
+  const c=document.getElementById('petals-canvas'),ctx=c.getContext('2d');
+  const resize=()=>{c.width=innerWidth;c.height=innerHeight};
+  resize();window.addEventListener('resize',resize);
+  const T=[{col:'#fff',sh:'j'},{col:'#FFF9C4',sh:'j'},{col:'#FFE8D6',sh:'r'},
+           {col:'#FFB7C5',sh:'r'},{col:'#FFE066',sh:'m'},{col:'#FFD700',sh:'m'}];
+  class P{
+    constructor(){this.reset(true)}
+    reset(init){
+      this.x=Math.random()*c.width;
+      this.y=init?Math.random()*c.height*-1:-18;
+      this.s=3+Math.random()*5;this.sp=.35+Math.random()*.75;
+      this.dr=(Math.random()-.5)*.55;this.rot=Math.random()*Math.PI*2;
+      this.rs=(Math.random()-.5)*.04;this.al=.45+Math.random()*.45;
+      this.sw=Math.random()*Math.PI*2;this.ss=.018+Math.random()*.022;
+      const t=T[Math.floor(Math.random()*T.length)];this.col=t.col;this.sh=t.sh;
+    }
+    update(){
+      this.sw+=this.ss;this.x+=this.dr+Math.sin(this.sw)*.5;
+      this.y+=this.sp;this.rot+=this.rs;
+      if(this.y>c.height+20)this.reset();
+    }
+    draw(){
+      ctx.save();ctx.translate(this.x,this.y);ctx.rotate(this.rot);
+      ctx.globalAlpha=this.al;ctx.fillStyle=this.col;
+      if(this.sh==='j'){
+        for(let i=0;i<5;i++){
+          ctx.save();ctx.rotate(i/5*Math.PI*2);
+          ctx.beginPath();ctx.ellipse(0,-this.s*.7,this.s*.38,this.s*.78,0,0,Math.PI*2);
+          ctx.fill();ctx.restore();
+        }
+        ctx.fillStyle='#FFF176';ctx.beginPath();ctx.arc(0,0,this.s*.28,0,Math.PI*2);ctx.fill();
+      }else if(this.sh==='r'){
+        ctx.beginPath();ctx.ellipse(0,0,this.s*.48,this.s,0,0,Math.PI*2);ctx.fill();
+      }else{
+        ctx.beginPath();ctx.arc(0,0,this.s*.55,0,Math.PI*2);ctx.fill();
+      }
+      ctx.restore();
+    }
+  }
+  const petals=Array.from({length:48},()=>new P());
+  (function loop(){ctx.clearRect(0,0,c.width,c.height);petals.forEach(p=>{p.update();p.draw()});requestAnimationFrame(loop)})();
+})();
+
+/* ── Smooth scroll nav ── */
+function scrollTo(id){
+  const el=document.getElementById(id);
+  if(el){
+    const offset=80;
+    const top=el.getBoundingClientRect().top+window.pageYOffset-offset;
+    window.scrollTo({top,behavior:'smooth'});
+  }
+  // update active nav
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.querySelectorAll('.mobile-menu a').forEach(a=>a.classList.remove('active'));
+}
+
+/* ── Active nav on scroll ── */
+const sections=['home','our-story','wedding-party','gallery'];
+const navLinks=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',function(){
+  const scrollY=window.pageYOffset+120;
+  sections.forEach(function(id){
+    const el=document.getElementById(id);
+    if(el && scrollY>=el.offsetTop && scrollY<el.offsetTop+el.offsetHeight){
+      navLinks.forEach(a=>a.classList.remove('active'));
+      const idx=sections.indexOf(id);
+      if(navLinks[idx])navLinks[idx].classList.add('active');
+    }
+  });
+
+  // fade-in on scroll
+  document.querySelectorAll('.fade-in').forEach(function(el){
+    const rect=el.getBoundingClientRect();
+    if(rect.top<window.innerHeight-80)el.classList.add('visible');
+  });
+});
+// trigger on load
+window.dispatchEvent(new Event('scroll'));
+
+/* ── Mobile menu ── */
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+/* ── Chatbot ── */
+document.getElementById('chatAvatar').addEventListener('click',function(){
+  var b=document.getElementById('chatBubble');
+  b.style.display=b.style.display==='none'?'block':'none';
+});
+</script>
+
+
+</body>
+
+</html>
