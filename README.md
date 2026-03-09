@@ -1,4 +1,4 @@
-# Tamilalakan & Sagana | Thirumanam 2023
+# Tamilalakan & Sagana | Thirumanam 2026
 
 A beautifully designed wedding website celebrating the union of Tamilalakan and Sagana with Tamil cultural heritage themes.
 
@@ -103,4 +103,5 @@ Works best in modern browsers supporting:
 
 ## Credits
 
-Designed and created for the wedding celebration of Tamilalakan & Sagana (Thirumanam 2023).
+Designed and created for the wedding celebration of Tamilalakan & Sagana (Thirumanam 2026).
+
